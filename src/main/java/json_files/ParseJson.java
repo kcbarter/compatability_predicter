@@ -4,13 +4,13 @@ import exceptions.FileNotFound;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import org.json.JSONObject;
+import org.json.simple.JSONObject;
 import org.json.simple.JSONArray;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
+import org.json.simple.parser.*;
 
 /**
  * Here ParseJson is responsible for parsing the json files.
@@ -20,7 +20,7 @@ public class ParseJson {
   /**
    * Empty Constructor for Parse
    */
-  ParseJson(){
+  public ParseJson(){
 
   }
 
@@ -28,21 +28,19 @@ public class ParseJson {
    * @param filename String of the Json filename to parse.
    * @return returns a JSONObject.
    */
-  private JSONObject jsonObject(String filename) throws FileNotFoundException {
+  private JSONObject jsonObject(String filename) throws FileNotFound {
     FileReader reader = null;
     Object object = null;
-
-    try{
-      new FileReader(filename);
-    } catch (FileNotFoundException e){
+    try {
+      reader = new FileReader(filename);
+    } catch (FileNotFoundException e) {
       throw new FileNotFound(e.getMessage());
     }
-    try{
+    try {
       object = new JSONParser().parse(reader);
-    } catch (IOException | ParseException e){
+    } catch (IOException | ParseException e) {
       e.printStackTrace();
     }
-
     return (JSONObject) object;
   }
 
@@ -58,25 +56,23 @@ public class ParseJson {
   public Map<String, Map<String, Integer>> getData(String key, String fileName)  {
     JSONObject jsonObject = null;
     Map<String, Map<String, Integer>> resultMap = new HashMap<>();
-    try{
+    try {
       jsonObject = jsonObject(fileName);
       JSONArray jsonArray = null;
-      try{
+      try {
         jsonArray = (JSONArray) jsonObject.get(key);
         if(jsonArray == null){
-          throw new NullPointerException("No " + key + " found!");
+          throw new NullPointerException();
         }
-
-
+        for(int i = 0; i < jsonArray.size(); i++){
+          System.out.println(jsonArray.get(i));
+        }
       }
       catch (NullPointerException e){
         e.getMessage();
       }
-    }
-    catch (FileNotFound e) {
-      e.getMessage();
-    } catch (FileNotFoundException e) {
-      e.printStackTrace();
+    } catch (FileNotFound e){
+      System.out.println(e.getMessage());
     }
     return resultMap;
   }

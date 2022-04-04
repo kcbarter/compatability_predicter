@@ -4,13 +4,12 @@ import exceptions.FileNotFound;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-import org.json.simple.JSONObject;
 import org.json.simple.JSONArray;
-import org.json.simple.parser.*;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 
 /**
  * Here ParseJson is responsible for parsing the json files.
@@ -64,6 +63,7 @@ public class ParseJson {
         if(jsonArray == null){
           throw new NullPointerException();
         }
+        //TODO: figure out how to parse json file into HashMap data structure above
         for(int i = 0; i < jsonArray.size(); i++){
           System.out.println(jsonArray.get(i));
         }

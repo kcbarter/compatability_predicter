@@ -2,6 +2,9 @@ package exceptions;
 
 import java.io.FileNotFoundException;
 
+/**
+ * Custom exception class
+ */
 public class FileNotFound extends FileNotFoundException {
   /**
    * Constructor for the File not found
